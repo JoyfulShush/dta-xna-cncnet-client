@@ -1,5 +1,6 @@
 ﻿using Rampastring.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace DTAClient.Domain.Singleplayer
 {
@@ -27,6 +28,7 @@ namespace DTAClient.Domain.Singleplayer
         public string Description { get; private set; } = "No description";
         public string LoreDescription { get; private set; } = "No lore description";
         public string CampaignID { get; private set; }
+        public List<BonusSpecificINIValue> BonusSpecificINIValues { get; } = new List<BonusSpecificINIValue>(0);
         public Difficulty Difficulty { get; private set; }
 
         public bool Unlocked { get; set; }
@@ -60,6 +62,20 @@ namespace DTAClient.Domain.Singleplayer
             bonus.CampaignID = iniSection.GetStringValue(nameof(CampaignID), bonus.CampaignID);
 
             bonus.Difficulty.ReadFromIniSection(iniSection);
+
+            // Parse bonus specific INI values
+            int i = 0;
+            while (true)
+            {
+                string bonusValueKey = "BonusSpecificINIValue" + i;
+                if (!iniSection.KeyExists(bonusValueKey))
+                    break;
+
+                string value = iniSection.GetStringValue(bonusValueKey, null);
+                var bonusSpecificIniValue = BonusSpecificINIValue.FromString(value);
+                bonus.BonusSpecificINIValues.Add(bonusSpecificIniValue);
+                i++;
+            }
 
             return bonus;
         }

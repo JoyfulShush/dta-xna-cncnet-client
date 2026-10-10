@@ -536,6 +536,14 @@ namespace DTAClient.Domain.Singleplayer
                     }
                 }
 
+                // Set bonus-specific INI values
+                if (bonus != null) {
+                    foreach (var bonusIniValue in bonus.BonusSpecificINIValues)
+                    {   
+                        mapIni.SetStringValue(bonusIniValue.INISection, bonusIniValue.INIKey, bonusIniValue.INIValue);
+                    }
+                }
+
                 mapIni.WriteIniFile(ProgramConstants.GamePath + "spawnmap.ini");
             }
         }

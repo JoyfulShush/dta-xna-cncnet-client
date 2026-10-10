@@ -232,6 +232,8 @@ namespace DTAClient.Domain.Singleplayer
         /// </summary>
         public List<GlobalSpecificINIValue> GlobalSpecificINIValues { get; } = new List<GlobalSpecificINIValue>(0);
 
+        public List<BonusSpecificINIValue> BonusSpecificINIValues { get; } = new List<BonusSpecificINIValue>(0);
+
         /// <summary>
         /// List of categories that this mission is associated with.
         /// When a category is chosen in the client, the mission would only appear in the client if
